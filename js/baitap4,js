@@ -1,0 +1,40 @@
+function onLoaiKhachHangChange() {
+    var loaiKhachHang = document.getElementById("loaiKhachHang").value;
+    var soKetNoiGroup = document.getElementById("soKetNoiGroup");
+    var soKetNoiInput = document.getElementById("soKetNoi");
+
+    if (loaiKhachHang === "doanhNghiep") {
+        // Nếu là loại doanh nghiệp, hiển thị input số kết nối và bỏ chọn số kết nối
+        soKetNoiGroup.style.display = "block";
+        soKetNoiInput.removeAttribute("disabled");
+    } else {
+        // Nếu là loại nhà dân, ẩn input số kết nối và đặt số kết nối về 0
+        soKetNoiGroup.style.display = "none";
+        soKetNoiInput.setAttribute("disabled", true);
+        soKetNoiInput.value = 0;
+    }
+}
+
+document.getElementById("btnTinhHoaDon").addEventListener("click", function() {
+    var loaiKhachHang = document.getElementById("loaiKhachHang").value;
+    var soKetNoi = 0;
+    var soKetNoiInput = document.getElementById("soKetNoi");
+    var soKenhCaoCap = parseInt(document.getElementById("soKenhCaoCap").value);
+    var hoaDon = 0;
+
+    if (loaiKhachHang === "doanhNghiep") {
+        // Nếu là doanh nghiệp, lấy giá trị số kết nối từ input
+        soKetNoi = parseInt(soKetNoiInput.value);
+    }
+
+    if (loaiKhachHang === "nhaDan") {
+        hoaDon = 4.5 + 20.5 + 7.5 * soKenhCaoCap;
+    } else {
+        // Tính tiền dịch vụ doanh nghiệp
+        var phiDichVuCoBan = 75 + (soKetNoi - 10) * 5;
+        hoaDon = 15 + phiDichVuCoBan + 50 * soKenhCaoCap;
+    }
+
+    // Hiển thị kết quả
+    document.getElementById("txtHoaDon").innerText = "Hóa đơn khách hàng: " + hoaDon.toFixed(2) + "$";
+});
